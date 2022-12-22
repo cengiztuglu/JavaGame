@@ -2,7 +2,6 @@ package defaultPackage;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,8 +10,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.ArrayList;
+
+import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageOutputStream;
@@ -43,6 +43,8 @@ class Ates{
 
 public class Oyun extends JPanel implements KeyListener, ActionListener{
   
+	
+	Timer timer=new Timer(1,this);
 
 
 	private int gecen_sure=0;
@@ -53,7 +55,7 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 	private int topX=2;
 	private int topdirX=2;
 	private int UzayGemisiX=0;
-	private int dirUzay=20;
+	private int dirUzayX=20;
 	
 	
 	public Oyun() {
@@ -67,6 +69,8 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 		e.printStackTrace();
 	}
 	setBackground(Color.BLACK);
+	
+    timer.start();
 	
 	
 	}
@@ -89,8 +93,16 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		
+		topX+=topdirX;
+		if(topX>=750)
+		{
+			topdirX=-topdirX;
+		}
+		if(topX<=0)
+		{
+			topdirX=-topdirX;
+		}
+		repaint();
 	}
 
 	@Override
@@ -101,7 +113,31 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-	
+		 int c=e.getKeyCode();
+		 if(c==KeyEvent.VK_LEFT)
+		 {
+			 if(UzayGemisiX<=0)
+			 {
+			 UzayGemisiX=0;
+			
+		 }
+			 else
+			 {
+				 UzayGemisiX-=dirUzayX;
+			 }
+			 }
+		 else if (c==KeyEvent.VK_RIGHT)
+		 {
+			 if(UzayGemisiX>=720)
+			 {
+				 UzayGemisiX=720;
+			 }
+			 else
+			 {
+				 UzayGemisiX+=dirUzayX;
+			 }
+			 
+		 }
 		
 	}
 
