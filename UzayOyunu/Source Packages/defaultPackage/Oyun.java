@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 class Ates{
 	private int x;
 	private int y;
-	public shots(int x, int y) {
+	public Ates(int x, int y) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -77,7 +77,7 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 		super.paint(g);
 		g.setColor(Color.red);
 		g.fillOval(topX, 0, 20, 20);
-		g.drawImage(image, UzayGemisiX,490,image.getWidth()/10,image.getHeight(),this);
+		g.drawImage(image, UzayGemisiX,490,image.getWidth()/10,getHeight()/7,this);
 	}
 	
 
