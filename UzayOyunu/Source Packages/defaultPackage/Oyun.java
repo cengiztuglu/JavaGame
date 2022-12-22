@@ -2,6 +2,7 @@ package defaultPackage;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,11 +12,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.Iterator;
 import javax.swing.Timer;
-
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageOutputStream;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 class Ates{
 	private int x;
@@ -51,12 +52,24 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 	private int harcanan_ates=0;
 	private BufferedImage image;
 	private ArrayList<Ates> atesler=new ArrayList<Ates>();
-	private int atesdirY=1;
+	private int atesdirY=3;
 	private int topX=2;
-	private int topdirX=2;
+	private int topdirX=4;
 	private int UzayGemisiX=0;
-	private int dirUzayX=20;
-	
+	private int dirUzayX=30;
+	public boolean check()
+	{
+		for(Ates ates:atesler)
+		{
+			if (new Rectangle(ates.getX(),ates.getY(),10,20).intersects(new Rectangle(topX,0,20,20)))
+			{
+				return true;
+				
+			}
+			
+		}
+		return false;
+	}
 	
 	public Oyun() {
 	try {
@@ -71,6 +84,8 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 	setBackground(Color.BLACK);
 	
     timer.start();
+   
+    
 	
 	
 	}
@@ -79,9 +94,35 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paint(g);
+		gecen_sure+=5;
 		g.setColor(Color.red);
 		g.fillOval(topX, 0, 20, 20);
 		g.drawImage(image, UzayGemisiX,490,image.getWidth()/10,getHeight()/7,this);
+		for(Ates ates:atesler)
+		{
+			if(ates.getY()<0)
+			{
+				atesler.remove(ates);
+			}
+		}
+		g.setColor(Color.ORANGE);
+		for(Ates ates:atesler)
+		{
+		g.fillRect(ates.getX(),ates.getY(), 10,20);
+	
+			
+		}
+		if(check())
+		{
+			timer.stop();
+			String message="Kazandınız....\n"+
+			                "harcanan ates:"+harcanan_ates+
+			                "gecen süre:" + gecen_sure/1000.0;
+			JOptionPane.showMessageDialog(this, message);
+			System.exit(UzayGemisiX);
+			                
+					
+		}
 	}
 	
 
@@ -93,6 +134,13 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		for(Ates ates:atesler)
+		{
+			ates.setY((ates.getY())-atesdirY);
+			
+		}
+		 
 		topX+=topdirX;
 		if(topX>=750)
 		{
@@ -136,10 +184,17 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 			 {
 				 UzayGemisiX+=dirUzayX;
 			 }
+		 }
 			 
+			 else if (c==KeyEvent.VK_CONTROL) 
+			 {
+				 atesler.add(new Ates(UzayGemisiX+20,470));
+				 harcanan_ates++;
+				
+			}
 		 }
 		
-	}
+	
 
 	@Override
 	public void keyReleased(KeyEvent e) {
