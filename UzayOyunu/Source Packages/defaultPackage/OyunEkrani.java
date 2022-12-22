@@ -20,7 +20,7 @@ public static void main(String[] args) {
 	
 	 ekran.setSize(800,600);
 	 ekran.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	 Oyun oyun=new Oyun();
+	Oyun oyun=new Oyun();
 	 oyun.requestFocus();
      oyun.addKeyListener(oyun); //klavyedeki verileri algılama
    
