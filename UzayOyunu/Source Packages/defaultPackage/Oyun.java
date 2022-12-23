@@ -1,6 +1,7 @@
 package defaultPackage;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import java.util.Iterator;
 import javax.swing.Timer;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageOutputStream;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 class Ates{
@@ -81,11 +83,12 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	setBackground(Color.BLACK);
+	setBackground(Color.DARK_GRAY);
+    
 	
     timer.start();
    
-    
+       
 	
 	
 	}
@@ -95,9 +98,24 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 		// TODO Auto-generated method stub
 		super.paint(g);
 		gecen_sure+=5;
+		
 		g.setColor(Color.red);
 		g.fillOval(topX, 0, 20, 20);
 		g.drawImage(image, UzayGemisiX,490,image.getWidth()/10,getHeight()/7,this);
+		 JLabel süre = new JLabel();
+		 JLabel atessayi = new JLabel();
+		
+		
+		 süre.setText(Double.toString(gecen_sure/1000.0));
+		 süre.setForeground(Color.RED);
+		 süre.setBackground(Color.WHITE);
+		  süre.setBounds(0, 0, 400, 30);
+		  süre.paint(g);
+		  atessayi.setText(Integer.toString(harcanan_ates));
+			 atessayi.setForeground(Color.RED);
+			 atessayi.setBackground(Color.WHITE);
+			 atessayi.setBounds(70, 100, 400, 60);
+			 atessayi.paint(g);
 		for(Ates ates:atesler)
 		{
 			if(ates.getY()<0)
@@ -120,7 +138,7 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 			                "gecen süre:" + gecen_sure/1000.0;
 			JOptionPane.showMessageDialog(this, message);
 			System.exit(UzayGemisiX);
-			                
+			  
 					
 		}
 	}
@@ -160,12 +178,12 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {//uzay gemisi hareket ettirme 
 		 int c=e.getKeyCode();
 		 if(c==KeyEvent.VK_LEFT)
 		 {
 			 if(UzayGemisiX<=0)
-			 {
+			 {                           // x eksenini eksi yönde geçmemesi için 
 			 UzayGemisiX=0;
 			
 		 }
@@ -188,7 +206,7 @@ public class Oyun extends JPanel implements KeyListener, ActionListener{
 			 
 			 else if (c==KeyEvent.VK_CONTROL) 
 			 {
-				 atesler.add(new Ates(UzayGemisiX+20,470));
+				 atesler.add(new Ates(UzayGemisiX+20,470));//ateşin uzay gemisinden çıkma komutları
 				 harcanan_ates++;
 				
 			}
